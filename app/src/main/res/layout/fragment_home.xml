@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.xsy.logindemo.view.MyScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_header"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#ff0055"
+                android:gravity="center"
+                android:text="这是头部"
+                android:textColor="#000" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tl_community"
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:background="#fff"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="2dp"
+                app:tabMinWidth="180dp"
+                app:tabSelectedTextColor="#220466"
+                app:tabTextColor="#000" />
+
+            <com.xsy.logindemo.view.MyViewPager
+                android:id="@+id/vp_community"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="#fff" />
+        </LinearLayout>
+    </com.xsy.logindemo.view.MyScrollView>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tl_top"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:background="#fff"
+        android:visibility="gone"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="2dp"
+        app:tabMinWidth="180dp"
+        app:tabSelectedTextColor="#220466"
+        app:tabTextColor="#000" />
+</FrameLayout>

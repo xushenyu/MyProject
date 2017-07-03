@@ -1,8 +1,9 @@
-package com.xsy.logindemo;
+package com.xsy.logindemo.activity;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -21,6 +22,9 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.xsy.logindemo.AndroidBug5497Workaround;
+import com.xsy.logindemo.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
     private ImageView logo;
@@ -69,6 +73,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         keyHeight = screenHeight / 3;//弹起高度为屏幕高度的1/3
     }
     private void initListener() {
+        btn_login.setOnClickListener(this);
         iv_clean_phone.setOnClickListener(this);
         clean_password.setOnClickListener(this);
         iv_show_pwd.setOnClickListener(this);
@@ -218,6 +223,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String pwd = et_password.getText().toString();
                 if (!TextUtils.isEmpty(pwd))
                     et_password.setSelection(pwd.length());
+                break;
+            case R.id.btn_login:
+                startActivity(new Intent(this,HomeActivity.class));
                 break;
         }
     }
