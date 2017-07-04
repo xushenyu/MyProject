@@ -2,6 +2,9 @@ package com.xsy.logindemo.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +36,7 @@ public class TabAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         MyViewHolder viewHolder = (MyViewHolder) holder;
-        viewHolder.textView.setText(mList.get(position));
+        viewHolder.textView.setText(textColorChange(mList.get(position), "第"+position+"个"));
 
     }
 
@@ -50,5 +53,16 @@ public class TabAdapter extends RecyclerView.Adapter {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.tv_item);
         }
+    }
+
+    private SpannableString textColorChange(String content, String str) {
+        String[] split = content.split(str);
+        SpannableString spannableString = new SpannableString(content);
+        if (content.contains(str)) {
+            if (split.length > 0) {
+                spannableString.setSpan(new ForegroundColorSpan(0xFFFF0000), split[0].length(), split[0].length() + str.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+        }
+        return spannableString;
     }
 }

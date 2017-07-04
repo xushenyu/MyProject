@@ -31,7 +31,7 @@ public class TabFragment extends BaseFragment {
         mRecyclerView.setFocusable(false);
         List<String> list = new ArrayList<>();
         for (int i=0;i<20;i++){
-            list.add("我是第"+i+"个");
+            list.add("我是第"+i+"个，中间的颜色不同偶");
         }
         TabAdapter tabAdapter = new TabAdapter(getActivity(), list);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
