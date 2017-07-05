@@ -22,6 +22,9 @@
         <activity
             android:name=".activity.HomeActivity"
             android:theme="@style/GlobalTheme"></activity>
+        <activity
+            android:name=".activity.SearchActivity"
+            android:theme="@style/GlobalTheme"></activity>
     </application>
 
 </manifest>
