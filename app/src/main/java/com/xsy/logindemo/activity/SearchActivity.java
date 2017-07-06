@@ -11,15 +11,15 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.xsy.logindemo.Adapter.SearchTextAdapter;
 import com.xsy.logindemo.Adapter.TabAdapter;
 import com.xsy.logindemo.R;
 import com.xsy.logindemo.base.BaseActivity;
+import com.xsy.logindemo.view.MyGridView;
+import com.xsy.logindemo.view.MyListView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,9 +34,9 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private EditText mEditText;
     private TextView tvCancle;
     private LinearLayout llSearch;
-    private GridView gridHot;
+    private MyGridView gridHot;
     private TextView tvHistory;
-    private ListView listHistory;
+    private MyListView listHistory;
     private RecyclerView lvResult;
     private List<String> list1 = new ArrayList<>();
     private List<String> list2 = new ArrayList<>();
@@ -56,9 +56,9 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         mEditText = (EditText) findViewById(R.id.et_home_search);
         tvCancle = (TextView) findViewById(R.id.tv_home_cancle);
         llSearch = (LinearLayout) findViewById(R.id.ll_search);
-        gridHot = (GridView) findViewById(R.id.lv_hot);
+        gridHot = (MyGridView) findViewById(R.id.lv_hot);
         tvHistory = (TextView) findViewById(R.id.tv_history);
-        listHistory = (ListView) findViewById(R.id.lv_history);
+        listHistory = (MyListView) findViewById(R.id.lv_history);
         lvResult = (RecyclerView) findViewById(R.id.lv_result);
         mClear = (TextView) findViewById(R.id.clear);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);

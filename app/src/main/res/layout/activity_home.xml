@@ -7,7 +7,8 @@
     <com.xsy.logindemo.view.CustomHomeViewPager
         android:id="@+id/vp_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"/>
 
     <View
         android:id="@+id/view_line"
