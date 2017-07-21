@@ -3,19 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <ImageView
         android:id="@+id/iv_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:padding="15dp"
-        android:src="@mipmap/search"/>
-    <TextView
-        android:id="@+id/textView"
+        android:src="@mipmap/search" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/sf"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:textColor="#000"/>
+        android:layout_height="match_parent">
+
+        <com.xsy.logindemo.view.MyRecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></com.xsy.logindemo.view.MyRecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

@@ -1,13 +1,21 @@
 package com.xsy.logindemo.fragment;
 
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
+import com.xsy.logindemo.Adapter.RefreshAdapter;
 import com.xsy.logindemo.R;
 import com.xsy.logindemo.activity.SearchActivity;
 import com.xsy.logindemo.base.BaseFragment;
+import com.xsy.logindemo.model.RefreshBean;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by xsy on 2017/7/3.
@@ -15,8 +23,12 @@ import com.xsy.logindemo.base.BaseFragment;
 
 public class OtherFragment extends BaseFragment implements View.OnClickListener{
 
-    private TextView textView;
     private ImageView ivSearch;
+    private SwipeRefreshLayout spRefresh;
+    private RecyclerView recyclerView;
+    private List<RefreshBean> mList = new ArrayList<>();
+    private List<RefreshBean> tempList = new ArrayList<>();//模拟请求数据
+    private RefreshAdapter refreshAdapter;
 
     @Override
     public int getLayoutId() {
@@ -26,10 +38,39 @@ public class OtherFragment extends BaseFragment implements View.OnClickListener{
     @Override
     protected void initView(View view) {
         String title = getArguments().getString("title");
-        textView = (TextView) view.findViewById(R.id.textView);
         ivSearch = (ImageView) view.findViewById(R.id.iv_search);
-        textView.setText(title);
+        spRefresh = (SwipeRefreshLayout) view.findViewById(R.id.sf);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        for (int i = 0; i < 10; i++) {
+            RefreshBean refreshBean = new RefreshBean();
+            refreshBean.setTitle("这是第"+i+"个");
+            mList.add(refreshBean);
+        }
+
+        refreshAdapter = new RefreshAdapter(getActivity(), mList);
+        recyclerView.setAdapter(refreshAdapter);
+
+
         ivSearch.setOnClickListener(this);
+        spRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                myRefresh();
+            }
+        });
+        refreshAdapter.setOnRefreListener(new RefreshAdapter.OnRefreListener() {
+            @Override
+            public void refresh() {
+                myRefresh();
+                spRefresh.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        spRefresh.setRefreshing(true);
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -39,5 +80,27 @@ public class OtherFragment extends BaseFragment implements View.OnClickListener{
                 startActivity(new Intent(getActivity(),SearchActivity.class));
                 break;
         }
+    }
+
+    private void myRefresh(){//刷新操作
+        spRefresh.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                int num = (int) (Math.random() * 10);
+                for (int i = 0; i < num; i++) {
+                    RefreshBean refreshBean = new RefreshBean();
+                    refreshBean.setTitle("这是刷新之后添加的数据第"+i+"个");
+                    mList.add(refreshBean);
+                }
+                Collections.reverse(mList);//因为是模拟数据才做此操作
+                refreshAdapter.notifyDataSetChanged();
+                spRefresh.setRefreshing(false);
+            }
+        },1000);
+
+        for (int i = 0; i < mList.size(); i++) {
+            mList.get(i).setId("");//每次刷新时，将之前存储的id滞空
+        }
+        mList.get(mList.size()-1).setId("最新的Id");
     }
 }
