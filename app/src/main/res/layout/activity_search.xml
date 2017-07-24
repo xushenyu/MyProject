@@ -2,58 +2,71 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="@color/global_background03"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/tv_home_cancle"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:gravity="center"
             android:text="取消"
-            android:textColor="#000"
-            android:textSize="14sp" />
+            android:textColor="@color/c_black_high"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/et_home_search"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="28dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:layout_marginBottom="7dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="7dp"
             android:layout_toLeftOf="@id/tv_home_cancle"
             android:background="@drawable/edit_background"
             android:drawableLeft="@mipmap/sousuo"
             android:drawablePadding="7dp"
             android:focusable="true"
             android:gravity="center_vertical"
-            android:hint="输入关键字"
+            android:hint="搜索"
             android:imeOptions="actionSearch"
-            android:padding="3dp"
+            android:paddingLeft="7dp"
+            android:paddingRight="32dp"
             android:singleLine="true"
-            android:textColor="#000"
+            android:textColor="@color/c_black_high"
             android:textColorHint="#ff9797a1"
-            android:textSize="14sp" />
-    </RelativeLayout>
+            android:textSize="11.5sp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginTop="5dp"
-        android:background="#ff9797a1" />
+        <ImageView
+            android:id="@+id/img_clear_input"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="14dp"
+            android:layout_toLeftOf="@id/tv_home_cancle"
+            android:padding="9dp"
+            android:src="@mipmap/clear_coment"
+            android:visibility="gone" />
+    </RelativeLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp">
+        android:layout_height="0dp"
+        android:layout_marginTop="2dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:elevation="2dp">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -66,19 +79,28 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/textView2"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginBottom="12dp"
-                    android:background="#ff9797a1"
-                    android:gravity="center_vertical"
+                    android:layout_height="46dp"
+                    android:gravity="center"
                     android:text="热门搜索"
-                    android:textColor="#000"
-                    android:textSize="12sp" />
+                    android:textColor="@color/c_black_high"
+                    android:textSize="13.5sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:layout_marginLeft="23dp"
+                    android:layout_marginRight="23dp"
+                    android:background="@color/lines" />
 
                 <com.xsy.logindemo.view.MyGridView
                     android:id="@+id/lv_hot"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="23dp"
+                    android:layout_marginRight="23dp"
                     android:divider="@null"
                     android:listSelector="#00000000"
                     android:numColumns="2" />
@@ -86,30 +108,46 @@
                 <TextView
                     android:id="@+id/tv_history"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginBottom="12dp"
-                    android:layout_marginTop="12dp"
-                    android:background="#ff9797a1"
-                    android:gravity="center_vertical"
-                    android:text="最近搜索"
-                    android:textColor="#000"
-                    android:textSize="12sp" />
+                    android:layout_height="46dp"
+                    android:gravity="center"
+                    android:text="历史搜索"
+                    android:textColor="@color/c_black_high"
+                    android:textSize="13.5sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:id="@+id/view_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:layout_marginLeft="23dp"
+                    android:layout_marginRight="23dp"
+                    android:background="@color/lines" />
 
                 <com.xsy.logindemo.view.MyListView
                     android:id="@+id/lv_history"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="23dp"
+                    android:layout_marginRight="23dp"
                     android:divider="@null"
                     android:listSelector="#00000000" />
 
                 <TextView
                     android:id="@+id/clear"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="46dp"
                     android:gravity="center"
                     android:text="清除记录"
-                    android:textColor="#ff9797a1" />
+                    android:textColor="@color/c_red_high"
+                    android:textSize="11.5sp" />
+
+                <View
+                    android:id="@+id/view_line1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:layout_marginLeft="23dp"
+                    android:layout_marginRight="23dp"
+                    android:background="@color/lines" />
             </LinearLayout>
         </ScrollView>
 
@@ -117,8 +155,64 @@
             android:id="@+id/lv_result"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone"
             android:divider="@null"
-            android:listSelector="@null"
-            android:visibility="gone" />
+            android:listSelector="@null" />
+
+        <FrameLayout
+            android:id="@+id/fl_no_net"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                android:gravity="center"
+                android:lineSpacingMultiplier="1.2"
+                android:text="WiFi和移动网络已断开\n请检查您的网络连接后重试"
+                android:textColor="@color/c_gray_high"
+                android:textSize="14sp" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_no_result"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="23dp"
+                android:gravity="center"
+                android:lineSpacingMultiplier="1.2"
+                android:text="很抱歉，没有搜索到相关内容，看看大家都在搜索什么吧"
+                android:textColor="@color/c_gray_high"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1.5dp"
+                android:layout_marginLeft="23dp"
+                android:layout_marginRight="23dp"
+                android:background="@color/lines" />
+
+            <GridView
+                android:id="@+id/gv_no_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="23dp"
+                android:layout_marginRight="23dp"
+                android:divider="@null"
+                android:listSelector="#00000000"
+                android:numColumns="2" />
+        </LinearLayout>
     </FrameLayout>
 </LinearLayout>

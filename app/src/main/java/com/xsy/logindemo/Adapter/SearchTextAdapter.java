@@ -1,11 +1,12 @@
 package com.xsy.logindemo.Adapter;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.xsy.logindemo.R;
@@ -53,20 +54,31 @@ public class SearchTextAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         viewHolder = new ViewHolder();
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_text_list, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_search_text_list, parent, false);
             viewHolder.tvItem = (TextView) convertView.findViewById(R.id.tv_item);
-            viewHolder.ivDelete = (ImageView) convertView.findViewById(R.id.iv_delete);
+            viewHolder.flDelete = (FrameLayout) convertView.findViewById(R.id.fl_delete);
+            viewHolder.line = convertView.findViewById(R.id.ver_line);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.tvItem.setText(mList.get(position));
         if (isHistory) {
-            viewHolder.ivDelete.setVisibility(View.VISIBLE);
+            viewHolder.flDelete.setVisibility(View.VISIBLE);
+            viewHolder.tvItem.setTextColor(0xff30303e);
+            viewHolder.tvItem.setGravity(Gravity.LEFT|Gravity.CENTER_VERTICAL);
+            viewHolder.line.setVisibility(View.GONE);
         } else {
-            viewHolder.ivDelete.setVisibility(View.GONE);
+            viewHolder.flDelete.setVisibility(View.GONE);
+            viewHolder.tvItem.setTextColor(0xffdf2f0d);
+            viewHolder.tvItem.setGravity(Gravity.CENTER);
+            if (position%2==1){
+                viewHolder.line.setVisibility(View.GONE);
+            }else{
+                viewHolder.line.setVisibility(View.VISIBLE);
+            }
         }
-        viewHolder.ivDelete.setOnClickListener(new View.OnClickListener() {
+        viewHolder.flDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mDeleteListenet.delete(position);
@@ -77,7 +89,8 @@ public class SearchTextAdapter extends BaseAdapter {
 
     class ViewHolder {
         private TextView tvItem;
-        private ImageView ivDelete;
+        private FrameLayout flDelete;
+        private View line;
     }
 
     public interface OnDeleteListener {

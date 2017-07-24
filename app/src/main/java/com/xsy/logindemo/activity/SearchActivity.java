@@ -8,9 +8,11 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -44,6 +46,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private SharedPreferences sp;
     private SearchTextAdapter adapter2;
     private TextView mClear;
+    private ImageView imgClear;
 
 
     @Override
@@ -61,6 +64,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         listHistory = (MyListView) findViewById(R.id.lv_history);
         lvResult = (RecyclerView) findViewById(R.id.lv_result);
         mClear = (TextView) findViewById(R.id.clear);
+        imgClear = (ImageView) findViewById(R.id.img_clear_input);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         lvResult.setLayoutManager(linearLayoutManager);
         initData();
@@ -106,11 +110,13 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void initListener() {
-        mEditText.setOnKeyListener(new View.OnKeyListener() {
+        mEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER
-                        && event.getAction() == KeyEvent.ACTION_DOWN) {// 修改回车键功能
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId== EditorInfo.IME_ACTION_SEARCH){
+                    if (TextUtils.isEmpty(v.getText().toString().trim())){
+                        return true;
+                    }
                     getResultData();
                 }
                 return false;
@@ -127,7 +133,10 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 if (TextUtils.isEmpty(s)) {
                     llSearch.setVisibility(View.VISIBLE);
                     lvResult.setVisibility(View.GONE);
+                    imgClear.setVisibility(View.GONE);
                     initHistory();
+                }else{
+                    imgClear.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -140,6 +149,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         tvCancle.setOnClickListener(this);
         listHistory.setOnItemClickListener(this);
         gridHot.setOnItemClickListener(this);
+        imgClear.setOnClickListener(this);
     }
 
     //模拟请求数据
@@ -179,11 +189,17 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private void save(String str) {
         List<String> spList = getSp();
         if (spList.size() >= 5) {
-            spList.remove(0);
+            if (!spList.contains(str)) {
+                spList.remove(0);
+            }else{
+                spList.remove(str);
+            }
+        }else {
+            if (spList.contains(str)) {
+                spList.remove(str);
+            }
         }
-        if (!spList.contains(str)) {
-            spList.add(str);
-        }
+        spList.add(str);
         String substring = spList.toString().substring(1, spList.toString().length() - 1);
         SharedPreferences.Editor edit = sp.edit();
         edit.putString("search", substring);
@@ -220,6 +236,9 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             case R.id.tv_home_cancle:
                 hideKey();
                 finish();
+                break;
+            case R.id.img_clear_input:
+                mEditText.setText("");
                 break;
         }
     }

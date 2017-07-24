@@ -9,7 +9,8 @@ import com.xsy.logindemo.Adapter.CustomHomePageAdapter;
 import com.xsy.logindemo.R;
 import com.xsy.logindemo.base.BaseActivity;
 import com.xsy.logindemo.fragment.HomeFragment;
-import com.xsy.logindemo.fragment.OtherFragment;
+import com.xsy.logindemo.fragment.SecondFragment;
+import com.xsy.logindemo.fragment.ThirdFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,12 +46,18 @@ public class HomeActivity extends BaseActivity {
             mTitles.add(title[i]);
             if (i==0){
                 mFragments.add(new HomeFragment());
-            }else{
-                OtherFragment otherFragment = new OtherFragment();
+            }else if (i ==1){
+                SecondFragment secondFragment = new SecondFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("title",title[i]);
-                otherFragment.setArguments(bundle);
-                mFragments.add(otherFragment);
+                secondFragment.setArguments(bundle);
+                mFragments.add(secondFragment);
+            }else{
+                ThirdFragment thirdFragment = new ThirdFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("title",title[i]);
+                thirdFragment.setArguments(bundle);
+                mFragments.add(thirdFragment);
             }
 
         }

@@ -21,7 +21,7 @@ import java.util.List;
  * Created by xsy on 2017/7/3.
  */
 
-public class OtherFragment extends BaseFragment implements View.OnClickListener{
+public class SecondFragment extends BaseFragment implements View.OnClickListener{
 
     private ImageView ivSearch;
     private SwipeRefreshLayout spRefresh;
@@ -87,10 +87,13 @@ public class OtherFragment extends BaseFragment implements View.OnClickListener{
             @Override
             public void run() {
                 int num = (int) (Math.random() * 10);
-                for (int i = 0; i < num; i++) {
+                for (int i = 0; i < num+1; i++) {
                     RefreshBean refreshBean = new RefreshBean();
                     refreshBean.setTitle("这是刷新之后添加的数据第"+i+"个");
-                    mList.add(refreshBean);
+                    refreshBean.setId("");
+                    if (!mList.contains(refreshBean)){
+                        mList.add(refreshBean);
+                    }
                 }
                 Collections.reverse(mList);//因为是模拟数据才做此操作
                 refreshAdapter.notifyDataSetChanged();
@@ -101,6 +104,6 @@ public class OtherFragment extends BaseFragment implements View.OnClickListener{
         for (int i = 0; i < mList.size(); i++) {
             mList.get(i).setId("");//每次刷新时，将之前存储的id滞空
         }
-        mList.get(mList.size()-1).setId("最新的Id");
+        mList.get(mList.size() - 1).setId("最新的Id");
     }
 }
