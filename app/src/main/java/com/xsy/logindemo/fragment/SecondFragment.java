@@ -6,12 +6,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.xsy.logindemo.Adapter.RefreshAdapter;
 import com.xsy.logindemo.R;
 import com.xsy.logindemo.activity.SearchActivity;
 import com.xsy.logindemo.base.BaseFragment;
+import com.xsy.logindemo.model.Data;
 import com.xsy.logindemo.model.RefreshBean;
+import com.xsy.logindemo.view.imagewatcher.ImageWatcher;
+import com.xsy.logindemo.view.imagewatcher.MessagePicturesLayout;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,12 +25,13 @@ import java.util.List;
  * Created by xsy on 2017/7/3.
  */
 
-public class SecondFragment extends BaseFragment implements View.OnClickListener{
+public class SecondFragment extends BaseFragment implements View.OnClickListener,ImageWatcher.OnPictureLongPressListener,MessagePicturesLayout.Callback {
 
+    private ImageWatcher vImageWatcher;
     private ImageView ivSearch;
     private SwipeRefreshLayout spRefresh;
     private RecyclerView recyclerView;
-    private List<RefreshBean> mList = new ArrayList<>();
+    private List<Data> mList = new ArrayList<>();
     private List<RefreshBean> tempList = new ArrayList<>();//模拟请求数据
     private RefreshAdapter refreshAdapter;
 
@@ -37,20 +42,25 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     protected void initView(View view) {
+        boolean isTranslucentStatus = false;
         String title = getArguments().getString("title");
         ivSearch = (ImageView) view.findViewById(R.id.iv_search);
         spRefresh = (SwipeRefreshLayout) view.findViewById(R.id.sf);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        for (int i = 0; i < 10; i++) {
-            RefreshBean refreshBean = new RefreshBean();
-            refreshBean.setTitle("这是第"+i+"个");
-            mList.add(refreshBean);
-        }
-
+        mList.addAll(Data.get());
         refreshAdapter = new RefreshAdapter(getActivity(), mList);
+        refreshAdapter.setPictureClickCallback(this);
         recyclerView.setAdapter(refreshAdapter);
 
+        // 一般来讲， ImageWatcher 需要占据全屏的位置
+        vImageWatcher = (ImageWatcher) view.findViewById(R.id.v_image_watcher);
+        // 如果是透明状态栏，你需要给ImageWatcher标记 一个偏移值，以修正点击ImageView查看的启动动画的Y轴起点的不正确
+//        vImageWatcher.setTranslucentStatus(!isTranslucentStatus ? Utils.calcStatusBarHeight(getActivity()) : 0);
+        // 配置error图标
+        vImageWatcher.setErrorImageRes(R.mipmap.error_picture);
+        // 长按图片的回调，你可以显示一个框继续提供一些复制，发送等功能
+        vImageWatcher.setOnPictureLongPressListener(this);
 
         ivSearch.setOnClickListener(this);
         spRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -86,15 +96,7 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
         spRefresh.postDelayed(new Runnable() {
             @Override
             public void run() {
-                int num = (int) (Math.random() * 10);
-                for (int i = 0; i < num+1; i++) {
-                    RefreshBean refreshBean = new RefreshBean();
-                    refreshBean.setTitle("这是刷新之后添加的数据第"+i+"个");
-                    refreshBean.setId("");
-                    if (!mList.contains(refreshBean)){
-                        mList.add(refreshBean);
-                    }
-                }
+                mList.addAll(Data.get());
                 Collections.reverse(mList);//因为是模拟数据才做此操作
                 refreshAdapter.notifyDataSetChanged();
                 spRefresh.setRefreshing(false);
@@ -106,4 +108,15 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
         }
         mList.get(mList.size() - 1).setId("最新的Id");
     }
+
+    @Override
+    public void onPictureLongPress(ImageView v, String url, int pos) {
+        Toast.makeText(getActivity(), "长按", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onThumbPictureClick(ImageView i, List<ImageView> imageGroupList, List<String> urlList) {
+        vImageWatcher.show(i, imageGroupList, urlList);
+    }
+
 }

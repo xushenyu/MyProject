@@ -13,11 +13,20 @@
         android:focusable="false"
         android:visibility="gone"/>
     <TextView
-        android:id="@+id/tv_item"
+        android:id="@+id/t_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@mipmap/ic_launcher"
-        android:gravity="center_vertical"
-        android:textSize="15sp"
-        android:textColor="#000"/>
+        android:layout_marginTop="10dip"
+        android:textColor="#000"
+        android:textSize="15sp"/>
+
+    <com.xsy.logindemo.view.imagewatcher.MessagePicturesLayout
+        android:id="@+id/l_pictures"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/c_gray_mid"/>
 </LinearLayout>

@@ -9,7 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.xsy.logindemo.R;
-import com.xsy.logindemo.model.RefreshBean;
+import com.xsy.logindemo.model.Data;
+import com.xsy.logindemo.view.imagewatcher.MessagePicturesLayout;
 
 import java.util.List;
 
@@ -20,15 +21,20 @@ import java.util.List;
 public class RefreshAdapter extends RecyclerView.Adapter {
 
     private final Context mContext;
-    private List<RefreshBean> mList;
+    private List<Data> mList;
     private OnRefreListener listener;
+    private MessagePicturesLayout.Callback mCallback;
 
-    public RefreshAdapter(Context context, List<RefreshBean> list) {
+    public RefreshAdapter(Context context, List<Data> list) {
         this.mContext = context;
         this.mList = list;
     }
     public void setOnRefreListener(OnRefreListener listener) {
         this.listener = listener;
+    }
+    public RefreshAdapter setPictureClickCallback(MessagePicturesLayout.Callback callback) {
+        mCallback = callback;
+        return this;
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -43,7 +49,9 @@ public class RefreshAdapter extends RecyclerView.Adapter {
         }else{
             viewHolder.tvRefresh.setVisibility(View.GONE);
         }
-        viewHolder.textView.setText(mList.get(position).getTitle());
+        viewHolder.textView.setText(mList.get(position).getContent());
+        viewHolder.lPictures.setCallback(mCallback);
+        viewHolder.lPictures.set(mList.get(position).getPictureThumbList(),mList.get(position).getPictureList());
         viewHolder.tvRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,25 +69,17 @@ public class RefreshAdapter extends RecyclerView.Adapter {
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         public TextView textView,tvRefresh;
+        public MessagePicturesLayout lPictures;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            textView = (TextView) itemView.findViewById(R.id.tv_item);
+            textView = (TextView) itemView.findViewById(R.id.t_content);
             tvRefresh = (TextView) itemView.findViewById(R.id.tv_refresh);
+            lPictures = (MessagePicturesLayout) itemView.findViewById(R.id.l_pictures);
         }
     }
 
-//    private SpannableString textColorChange(String content, String str) {
-//        String[] split = content.split(str);
-//        SpannableString spannableString = new SpannableString(content);
-//        if (content.contains(str)) {
-//            if (split.length > 0) {
-//                spannableString.setSpan(new ForegroundColorSpan(0xFFFF0000), split[0].length(), split[0].length() + str.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//            }
-//        }
-//        return spannableString;
-//    }
    public interface OnRefreListener{
-        public void refresh();
+         void refresh();
     }
 }

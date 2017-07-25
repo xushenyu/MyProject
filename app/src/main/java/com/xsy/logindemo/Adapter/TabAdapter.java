@@ -30,7 +30,7 @@ public class TabAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_tab_list, parent, false));
+        return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_home_list, parent, false));
     }
 
     @Override
