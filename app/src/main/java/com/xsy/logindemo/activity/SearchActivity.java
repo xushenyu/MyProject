@@ -20,8 +20,12 @@ import com.xsy.logindemo.Adapter.SearchTextAdapter;
 import com.xsy.logindemo.Adapter.TabAdapter;
 import com.xsy.logindemo.R;
 import com.xsy.logindemo.base.BaseActivity;
+import com.xsy.logindemo.event.ImageWatcherEvent;
 import com.xsy.logindemo.view.MyGridView;
 import com.xsy.logindemo.view.MyListView;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -113,8 +117,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         mEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId== EditorInfo.IME_ACTION_SEARCH){
-                    if (TextUtils.isEmpty(v.getText().toString().trim())){
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    if (TextUtils.isEmpty(v.getText().toString().trim())) {
                         return true;
                     }
                     getResultData();
@@ -135,7 +139,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                     lvResult.setVisibility(View.GONE);
                     imgClear.setVisibility(View.GONE);
                     initHistory();
-                }else{
+                } else {
                     imgClear.setVisibility(View.VISIBLE);
                 }
             }
@@ -191,10 +195,10 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         if (spList.size() >= 5) {
             if (!spList.contains(str)) {
                 spList.remove(0);
-            }else{
+            } else {
                 spList.remove(str);
             }
-        }else {
+        } else {
             if (spList.contains(str)) {
                 spList.remove(str);
             }
@@ -256,5 +260,11 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             mEditText.setSelection(s.length());
         }
         getResultData();
+    }
+
+    //先放着，暂时不用
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(ImageWatcherEvent event) {
+
     }
 }

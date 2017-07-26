@@ -2,6 +2,7 @@ package com.xsy.logindemo.fragment;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,6 +10,8 @@ import com.xsy.logindemo.Adapter.CustomHomePageAdapter;
 import com.xsy.logindemo.R;
 import com.xsy.logindemo.base.BaseFragment;
 import com.xsy.logindemo.event.ImageWatcherEvent;
+import com.xsy.logindemo.utils.BaseCallback;
+import com.xsy.logindemo.utils.OkHttpHelper;
 import com.xsy.logindemo.view.MyScrollView;
 import com.xsy.logindemo.view.MyViewPager;
 
@@ -16,7 +19,11 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by xsy on 2017/7/3.
@@ -64,6 +71,26 @@ public class HomeFragment extends BaseFragment {
                 }
             }
         });
+        HashMap<String, String> params = new HashMap<>();
+        params.put("userid","4209745");
+        OkHttpHelper.getInstance().post("http://gq24v4.test.gq.com.cn/mobileadmin/gq24/api40/getuserhgrulist", params, new BaseCallback<String>() {
+            @Override
+            public void onRequestBefore() {
+            }
+
+            @Override
+            public void onFailure(Request request, Exception e, int taskId) {
+            }
+
+            @Override
+            public void onSuccess(Response response, String o, int taskId) {
+                Log.e("flag--","onSuccess(HomeFragment.java:90)-->>"+o);
+            }
+
+            @Override
+            public void onError(Response response, int errorCode, Exception e, int taskId) {
+            }
+        },1);
     }
 
     //先放着，暂时不用，因为BaseFragment中注册了EventBus,这里如果没有@Subscribe就会报错

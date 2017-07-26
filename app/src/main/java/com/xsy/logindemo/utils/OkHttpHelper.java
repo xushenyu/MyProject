@@ -2,12 +2,15 @@ package com.xsy.logindemo.utils;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -35,11 +38,11 @@ public class OkHttpHelper {
      * 单例模式，私有构造函数，构造函数里面进行一些初始化
      */
     private OkHttpHelper() {
-        mClientInstance = new OkHttpClient();
-
-//        mClientInstance.setConnectTimeout(10, TimeUnit.SECONDS);
-//        mClientInstance.setReadTimeout(10, TimeUnit.SECONDS);
-//        mClientInstance.setWriteTimeout(30, TimeUnit.SECONDS);
+        mClientInstance = new OkHttpClient.Builder().
+                connectTimeout(10, TimeUnit.SECONDS).
+                readTimeout(10, TimeUnit.SECONDS).
+                writeTimeout(30, TimeUnit.SECONDS).
+                build();
         mGson = new Gson();
 
         mHandler = new Handler(Looper.getMainLooper());
@@ -50,7 +53,7 @@ public class OkHttpHelper {
      *
      * @return
      */
-    public static OkHttpHelper getinstance() {
+    public static OkHttpHelper getInstance() {
 
         if (mOkHttpHelperInstance == null) {
 
@@ -70,7 +73,7 @@ public class OkHttpHelper {
 
         //在请求之前所做的事，比如弹出对话框等
         callback.onRequestBefore();
-
+        Log.e("Request", "url-->"+request.toString());
         mClientInstance.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -83,7 +86,7 @@ public class OkHttpHelper {
                 if (response.isSuccessful()) {
                     //返回成功回调
                     String resString = response.body().string();
-
+                    Log.e("Response",resString);
                     if (callback.mType == String.class) {
                         //如果我们需要返回String类型
                         callbackSuccess(response, resString, callback, mTaskId);
@@ -108,6 +111,7 @@ public class OkHttpHelper {
 
     /**
      * 在主线程中执行的回调
+     *
      * @param response
      * @param o
      * @param callback
@@ -160,7 +164,7 @@ public class OkHttpHelper {
      * @param url
      * @param callback
      */
-    public void get(String url, BaseCallback callback,int taskId) {
+    public void get(String url, BaseCallback callback, int taskId) {
         Request request = buildRequest(url, null, HttpMethodType.GET);
         request(request, callback, taskId);
     }
@@ -172,7 +176,7 @@ public class OkHttpHelper {
      * @param params
      * @param callback
      */
-    public void post(String url, Map<String, String> params, BaseCallback callback,int taskId) {
+    public void post(String url, Map<String, String> params, BaseCallback callback, int taskId) {
         Request request = buildRequest(url, params, HttpMethodType.POST);
         request(request, callback, taskId);
     }
@@ -186,6 +190,10 @@ public class OkHttpHelper {
      * @return
      */
     private Request buildRequest(String url, Map<String, String> params, HttpMethodType type) {
+        if (params!=null){
+            String buffer = getAppearUrl(url,params);
+            Log.e("Request","url-->"+buffer);
+        }
         Request.Builder builder = new Request.Builder();
         builder.url(url);
         if (type == HttpMethodType.GET) {
@@ -213,6 +221,22 @@ public class OkHttpHelper {
         return builder.build();
     }
 
+    /**
+     * 拼凑请求url
+     * @param url
+     * @param aParams
+     * @return
+     */
+    private String getAppearUrl(String url,Map<String, String> aParams) {
+        String temp = url + "?";
+        Set<String> strings = aParams.keySet();
+        for (String aKey : strings) {
+            temp = temp + aKey + "=" + aParams.get(aKey) + "&";
+        }
+        temp = temp.substring(0, temp.length() - 1);
+
+        return temp;
+    }
     /**
      * 这个枚举用于指明是哪一种提交方式
      */

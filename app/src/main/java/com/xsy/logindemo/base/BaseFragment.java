@@ -30,4 +30,10 @@ public abstract class BaseFragment extends Fragment {
     public abstract int getLayoutId();
 
     protected abstract void initView(View view);
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }
