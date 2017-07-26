@@ -6,7 +6,11 @@ import android.view.View;
 import com.xsy.logindemo.Adapter.TabAdapter;
 import com.xsy.logindemo.R;
 import com.xsy.logindemo.base.BaseFragment;
+import com.xsy.logindemo.event.ImageWatcherEvent;
 import com.xsy.logindemo.view.MyRecyclerView;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,5 +41,10 @@ public class TabFragment extends BaseFragment {
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(tabAdapter);
+    }
+    //先放着，暂时不用
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(ImageWatcherEvent event) {
+
     }
 }

@@ -32,6 +32,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.xsy.logindemo.R;
+import com.xsy.logindemo.event.ImageWatcherEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -286,6 +289,10 @@ public class ImageWatcher extends FrameLayout implements GestureDetector.OnGestu
         ViewState vsDefault = ViewState.read(iSource, ViewState.STATE_DEFAULT);
         if (vsDefault == null || (vsCurrent.scaleY <= vsDefault.scaleY && vsCurrent.scaleX <= vsDefault.scaleX)) {
             mExitScalingRef = 0;
+            //通知首页显示底部tabbar
+            ImageWatcherEvent imageWatcherEvent = new ImageWatcherEvent();
+            imageWatcherEvent.state = ImageWatcherEvent.IMAGE_OPEN;
+            EventBus.getDefault().post(imageWatcherEvent);
         } else {
             mExitScalingRef = 1;
         }

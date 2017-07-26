@@ -12,10 +12,15 @@ import com.xsy.logindemo.Adapter.RefreshAdapter;
 import com.xsy.logindemo.R;
 import com.xsy.logindemo.activity.SearchActivity;
 import com.xsy.logindemo.base.BaseFragment;
+import com.xsy.logindemo.event.ImageWatcherEvent;
 import com.xsy.logindemo.model.Data;
 import com.xsy.logindemo.model.RefreshBean;
 import com.xsy.logindemo.view.imagewatcher.ImageWatcher;
 import com.xsy.logindemo.view.imagewatcher.MessagePicturesLayout;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -116,7 +121,16 @@ public class SecondFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     public void onThumbPictureClick(ImageView i, List<ImageView> imageGroupList, List<String> urlList) {
+        //通知首页隐藏底部tabbar
+        ImageWatcherEvent imageWatcherEvent = new ImageWatcherEvent();
+        imageWatcherEvent.state = ImageWatcherEvent.IMAGE_CLOSE;
+        EventBus.getDefault().post(imageWatcherEvent);
+
         vImageWatcher.show(i, imageGroupList, urlList);
     }
+    //先放着，暂时不用
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(ImageWatcherEvent event) {
 
+    }
 }

@@ -8,8 +8,12 @@ import android.widget.TextView;
 import com.xsy.logindemo.Adapter.CustomHomePageAdapter;
 import com.xsy.logindemo.R;
 import com.xsy.logindemo.base.BaseFragment;
+import com.xsy.logindemo.event.ImageWatcherEvent;
 import com.xsy.logindemo.view.MyScrollView;
 import com.xsy.logindemo.view.MyViewPager;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +22,7 @@ import java.util.List;
  * Created by xsy on 2017/7/3.
  */
 
-public class HomeFragment extends BaseFragment{
+public class HomeFragment extends BaseFragment {
 
     private TextView textView;
     private TabLayout mTab1;
@@ -42,7 +46,7 @@ public class HomeFragment extends BaseFragment{
         List<String> titles = new ArrayList<>();
         List<Fragment> fragments = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            titles.add("tab"+i);
+            titles.add("tab" + i);
             TabFragment tabFragment = new TabFragment();
             fragments.add(tabFragment);
         }
@@ -53,12 +57,18 @@ public class HomeFragment extends BaseFragment{
         scrollView.setOnScrollListener(new MyScrollView.OnScrollListener() {
             @Override
             public void scrollChanged(int l, int t, int oldl, int oldt) {
-                if (t>header.getHeight()){
+                if (t > header.getHeight()) {
                     mTab1.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     mTab1.setVisibility(View.GONE);
                 }
             }
         });
+    }
+
+    //先放着，暂时不用，因为BaseFragment中注册了EventBus,这里如果没有@Subscribe就会报错
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(ImageWatcherEvent event) {
+
     }
 }
