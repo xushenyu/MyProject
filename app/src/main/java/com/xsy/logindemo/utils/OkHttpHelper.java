@@ -32,6 +32,7 @@ public class OkHttpHelper {
     private static OkHttpClient mClientInstance;
     private Handler mHandler;
     private Gson mGson;
+    private Class<?> mType;
 
 
     /**
@@ -65,7 +66,10 @@ public class OkHttpHelper {
         }
         return mOkHttpHelperInstance;
     }
-
+    public OkHttpHelper setModel(Class<?> subclass){
+        this.mType = subclass;
+        return mOkHttpHelperInstance;
+    }
     /**
      * 封装一个request方法，不管post或者get方法中都会用到
      */
@@ -86,14 +90,14 @@ public class OkHttpHelper {
                 if (response.isSuccessful()) {
                     //返回成功回调
                     String resString = response.body().string();
-                    Log.e("Response",resString);
-                    if (callback.mType == String.class) {
+                    Log.e("Response","code-->"+response.code()+",body-->"+resString);
+                    if (mType == String.class) {
                         //如果我们需要返回String类型
                         callbackSuccess(response, resString, callback, mTaskId);
                     } else {
                         //如果返回的是其他类型，则利用Gson去解析
                         try {
-                            Object o = mGson.fromJson(resString, callback.mType);
+                            Object o = mGson.fromJson(resString, mType);
                             callbackSuccess(response, o, callback, mTaskId);
                         } catch (JsonParseException e) {
                             e.printStackTrace();
