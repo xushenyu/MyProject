@@ -12,6 +12,7 @@ import com.xsy.logindemo.base.BaseFragment;
 import com.xsy.logindemo.event.ImageWatcherEvent;
 import com.xsy.logindemo.utils.BaseCallback;
 import com.xsy.logindemo.utils.OkHttpHelper;
+import com.xsy.logindemo.utils.Utils;
 import com.xsy.logindemo.view.MyScrollView;
 import com.xsy.logindemo.view.MyViewPager;
 
@@ -61,6 +62,13 @@ public class HomeFragment extends BaseFragment implements BaseCallback {
         mViewPager.setAdapter(pageAdapter);
         mTab1.setupWithViewPager(mViewPager);
         mTab2.setupWithViewPager(mViewPager);
+        mTab1.post(new Runnable() {//设置tablayout下划线宽度
+            @Override
+            public void run() {
+                Utils.setIndicator(mTab1,10,10);
+                Utils.setIndicator(mTab2,10,10);
+            }
+        });
         scrollView.setOnScrollListener(new MyScrollView.OnScrollListener() {
             @Override
             public void scrollChanged(int l, int t, int oldl, int oldt) {
