@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.xsy.logindemo.Adapter.CustomHomePageAdapter;
+import com.xsy.logindemo.adapter.CustomHomePageAdapter;
 import com.xsy.logindemo.R;
 import com.xsy.logindemo.base.BaseFragment;
 import com.xsy.logindemo.event.ImageWatcherEvent;

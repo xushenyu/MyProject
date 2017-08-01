@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.xsy.logindemo.Adapter.RefreshAdapter;
+import com.xsy.logindemo.adapter.RefreshAdapter;
 import com.xsy.logindemo.R;
 import com.xsy.logindemo.activity.SearchActivity;
 import com.xsy.logindemo.base.BaseFragment;

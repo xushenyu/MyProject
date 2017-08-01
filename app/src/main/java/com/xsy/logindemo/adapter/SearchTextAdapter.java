@@ -1,4 +1,4 @@
-package com.xsy.logindemo.Adapter;
+package com.xsy.logindemo.adapter;
 
 import android.content.Context;
 import android.view.Gravity;

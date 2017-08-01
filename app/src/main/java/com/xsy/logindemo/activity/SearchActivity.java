@@ -16,8 +16,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.xsy.logindemo.Adapter.SearchTextAdapter;
-import com.xsy.logindemo.Adapter.TabAdapter;
+import com.xsy.logindemo.adapter.SearchTextAdapter;
+import com.xsy.logindemo.adapter.TabAdapter;
 import com.xsy.logindemo.R;
 import com.xsy.logindemo.base.BaseActivity;
 import com.xsy.logindemo.event.ImageWatcherEvent;

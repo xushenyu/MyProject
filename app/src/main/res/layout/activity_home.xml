@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -9,7 +10,7 @@
         android:id="@+id/vp_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
     <View
         android:id="@+id/view_line"
@@ -20,11 +21,72 @@
 
     </View>
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tablayout_main"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#ffffffff"
-        app:tabIndicatorHeight="0dp"
-        app:tabMode="fixed"></android.support.design.widget.TabLayout>
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tablayout_main"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#ffffffff"
+            app:tabIndicatorHeight="0dp"
+            app:tabMode="fixed"></android.support.design.widget.TabLayout>
+
+        <LinearLayout
+            android:id="@+id/lay_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp"
+            android:visibility="gone">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="6">
+
+                <EditText
+                    android:id="@+id/et_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="6dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/edit_background"
+                    android:focusable="true"
+                    android:gravity="bottom"
+                    android:hint="说点啥"
+                    android:maxLines="3"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="40dp"
+                    android:paddingTop="10dp"
+                    android:scrollbars="vertical"
+                    android:textColorHint="#ffb2b2b2"
+                    android:textSize="15sp" />
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/btn_send_comment"
+                android:layout_width="0dp"
+                android:layout_height="23dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="7dp"
+                android:layout_weight="0.8"
+                android:background="@drawable/edit_background"
+                android:gravity="center"
+                android:text="发送"
+                android:textColor="#000000"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </FrameLayout>
 </LinearLayout>

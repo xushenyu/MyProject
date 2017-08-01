@@ -3,7 +3,7 @@ package com.xsy.logindemo.fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
-import com.xsy.logindemo.Adapter.TabAdapter;
+import com.xsy.logindemo.adapter.TabAdapter;
 import com.xsy.logindemo.R;
 import com.xsy.logindemo.base.BaseFragment;
 import com.xsy.logindemo.event.ImageWatcherEvent;

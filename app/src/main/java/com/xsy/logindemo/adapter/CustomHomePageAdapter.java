@@ -1,4 +1,4 @@
-package com.xsy.logindemo.Adapter;
+package com.xsy.logindemo.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
