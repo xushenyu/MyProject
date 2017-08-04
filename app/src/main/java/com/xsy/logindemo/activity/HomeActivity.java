@@ -47,6 +47,7 @@ public class HomeActivity extends BaseActivity {
     private EditText mEtComment;
     private int position;
     private LinearLayout mRooeView;
+    private int state;
 
     @Override
     protected int getLayoutId() {
@@ -132,7 +133,16 @@ public class HomeActivity extends BaseActivity {
                     mLayComment.setVisibility(View.VISIBLE);
                     mTab.setVisibility(View.GONE);
                     mEtComment.requestFocus();
-                } else {
+                } else {//查看大图的时候也会走这里
+                    if(state == ImageWatcherEvent.IMAGE_CLOSE){
+                        mLine.setVisibility(View.GONE);
+                        mTab.setVisibility(View.GONE);
+                        return;
+                    }else if(state == ImageWatcherEvent.IMAGE_OPEN){
+                        mLine.setVisibility(View.VISIBLE);
+                        mTab.setVisibility(View.VISIBLE);
+                        return;
+                    }
                     mLayComment.setVisibility(View.GONE);
                     mTab.postDelayed(new Runnable() {//防止底部导航栏闪现
                         @Override
@@ -161,18 +171,21 @@ public class HomeActivity extends BaseActivity {
     public void getImageevent(ImageWatcherEvent event) {
         switch (event.state) {
             case ImageWatcherEvent.IMAGE_CLOSE:
-                mLine.setVisibility(View.GONE);
-                mTab.setVisibility(View.GONE);
+                state = ImageWatcherEvent.IMAGE_CLOSE;
+//                mLine.setVisibility(View.GONE);
+//                mTab.setVisibility(View.GONE);
                 break;
             case ImageWatcherEvent.IMAGE_OPEN:
-                mLine.setVisibility(View.VISIBLE);
-                mTab.setVisibility(View.VISIBLE);
+                state = ImageWatcherEvent.IMAGE_OPEN;
+//                mLine.setVisibility(View.VISIBLE);
+//                mTab.setVisibility(View.VISIBLE);
                 break;
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(KeyBoardEvent event) {
+        state = 22;
         if (KeyBoardEvent.KEY_OPEN == event.keyState) {
             position = event.getPosition();
             mEtComment.setText(event.getContent());

@@ -267,16 +267,20 @@ public class ImageWatcher extends FrameLayout implements GestureDetector.OnGestu
                 }
             }
         }
-
-        if (mTouchMode == TOUCH_MODE_SLIDE) {
-            vPager.onTouchEvent(e2);
-        } else if (mTouchMode == TOUCH_MODE_SCALE_ROTATE) {
-            handleScaleRotateGesture(e2);
-        } else if (mTouchMode == TOUCH_MODE_EXIT) {
-            handleExitGesture(e2, e1);
-        } else if (mTouchMode == TOUCH_MODE_DRAG) {
-            handleDragGesture(e2, e1);
+        try {
+            if (mTouchMode == TOUCH_MODE_SLIDE) {
+                vPager.onTouchEvent(e2);
+            } else if (mTouchMode == TOUCH_MODE_SCALE_ROTATE) {
+                handleScaleRotateGesture(e2);
+            } else if (mTouchMode == TOUCH_MODE_EXIT) {
+                handleExitGesture(e2, e1);
+            } else if (mTouchMode == TOUCH_MODE_DRAG) {
+                handleDragGesture(e2, e1);
+            }
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
         }
+
         return false;
     }
 
